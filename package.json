@@ -3,20 +3,23 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "NODE_ENV=development node --watch --import remix/node-tsx server.ts",
-    "hmr": "NODE_ENV=development node hmr.ts",
-    "start": "NODE_ENV=production node --import remix/node-tsx server.ts",
-    "test": "NODE_ENV=test remix test",
-    "typecheck": "tsc --noEmit"
+    "dev": "cross-env NODE_ENV=development node --watch --import remix/node-tsx server.ts",
+    "hmr": "cross-env NODE_ENV=development node hmr.ts",
+    "start": "cross-env NODE_ENV=production node --import remix/node-tsx server.ts",
+    "test": "cross-env NODE_ENV=test remix test",
+    "typecheck": "tsc --noEmit",
+    "db:migrate": "cross-env NODE_ENV=production node --import remix/node-tsx scripts/migrate.ts"
   },
   "engines": {
     "node": ">=24.3.0"
   },
   "dependencies": {
+    "better-auth": "^1.7.25",
     "remix": "^3.2.0"
   },
   "devDependencies": {
     "@types/node": "latest",
+    "cross-env": "^10.1.0",
     "typescript": "latest"
   }
 }

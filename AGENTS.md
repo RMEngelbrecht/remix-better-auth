@@ -15,6 +15,17 @@ npm run typecheck
 
 Use `npm run hmr` for live server and browser updates; `npm run dev` only watches and restarts the server. `npm run start` runs in production mode without a separate build step.
 
+## Version Control
+
+This repo uses [jj (Jujutsu)](https://jj-vcs.github.io/jj/), colocated with git. Use jj, not git, for version control:
+
+- Inspect with `jj st`, `jj diff`, and `jj log`.
+- jj snapshots the working copy automatically. To commit, run `jj describe -m "message"`, then `jj new` to start the next change.
+- Use bookmarks instead of branches: `jj bookmark set <name> -r @`, then `jj git push --bookmark <name>`.
+- For isolated parallel work, use `jj workspace add <path>` rather than `git worktree`, and clean up with `jj workspace forget`.
+- Don't run git commands that change the repo (`commit`, `checkout`, `branch`, `rebase`, `stash`). Read-only git commands are fine.
+- On Windows with git's `core.autocrlf=true`, run `jj config set --repo working-copy.eol-conversion input-output`. Otherwise jj reports every file as modified because of line endings.
+
 ## Building Features
 
 Refer to ./.agents/skills/remix/SKILL.md for the Remix mental model and how to find guides and API READMEs through `node_modules/remix/INDEX.md`.

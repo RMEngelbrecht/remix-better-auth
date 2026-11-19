@@ -2,13 +2,15 @@
 import type { Handle, RemixNode } from 'remix/component'
 import { css } from 'remix/component'
 
+import type { AuthUser } from '../data/auth.ts'
+import { routes } from '../routes.ts'
 import { Document } from './document.tsx'
 import { PromptButton } from './public/prompt-button.tsx'
 
 const FONT_STACK =
   "'JetBrains Mono', ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace"
 
-export function HomePage() {
+export function HomePage(handle: Handle<{ user: AuthUser | null }>) {
   return () => (
     <Document head={<HomeHead />}>
       <main
@@ -44,6 +46,7 @@ export function HomePage() {
           justifyContent: 'center',
         })}
       >
+        <AccountNav user={handle.props.user} />
         <div
           mix={css({
             width: '100%',
@@ -61,6 +64,35 @@ export function HomePage() {
       </main>
     </Document>
   )
+}
+
+function AccountNav(handle: Handle<{ user: AuthUser | null }>) {
+  return () => {
+    let { user } = handle.props
+    return (
+      <nav
+        aria-label="Account"
+        mix={css({
+          position: 'absolute',
+          top: '16px',
+          right: '24px',
+          display: 'flex',
+          gap: '16px',
+          fontSize: '13px',
+          '& a': { color: 'var(--text-primary)' },
+        })}
+      >
+        {user ? (
+          <a href={routes.dashboard.index.href()}>{user.email}</a>
+        ) : (
+          <>
+            <a href={routes.login.index.href()}>Sign in</a>
+            <a href={routes.signup.index.href()}>Sign up</a>
+          </>
+        )}
+      </nav>
+    )
+  }
 }
 
 function HomeHead() {
