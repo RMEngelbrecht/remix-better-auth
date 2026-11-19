@@ -15,7 +15,8 @@
   },
   "dependencies": {
     "better-auth": "^1.7.25",
-    "remix": "^3.2.0"
+    "remix": "^3.2.0",
+    "varlock": "^1.25.0"
   },
   "devDependencies": {
     "@types/node": "latest",

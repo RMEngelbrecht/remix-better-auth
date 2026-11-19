@@ -5,6 +5,8 @@ import { DatabaseSync } from 'node:sqlite'
 import { betterAuth } from 'better-auth'
 import { getMigrations } from 'better-auth/db/migration'
 
+import { ENV } from '../env.ts'
+
 const nodeEnv = process.env.NODE_ENV ?? 'development'
 const isProduction = nodeEnv === 'production'
 const isTest = nodeEnv === 'test'
@@ -15,7 +17,7 @@ const publicPort = process.env.HMR_PROXY_PORT ?? process.env.PORT ?? '44100'
 
 export const auth = betterAuth({
   appName: 'Remix App',
-  baseURL: process.env.BETTER_AUTH_URL ?? `http://localhost:${publicPort}`,
+  baseURL: ENV.BETTER_AUTH_URL ?? `http://localhost:${publicPort}`,
   basePath: '/api/auth',
   secret: readSecret(),
   database: openDatabase(),
@@ -58,7 +60,7 @@ function openDatabase() {
 }
 
 function readSecret() {
-  let secret = process.env.BETTER_AUTH_SECRET
+  let secret = ENV.BETTER_AUTH_SECRET
 
   if (secret) return secret
 
